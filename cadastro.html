@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <link rel="stylesheet" href="./src/css/shee.css">
+    <link rel="shortcut icon" href="./src/img/./image1_0-removebg-preview-_1__1.ico" type="image/x-icon">
+    <title>N6 Bank - Cadastro da conta</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="container-logo">
+            <a href="./index.html"><img src="./src/img/Sem_Titulo-1.png" alt="logo" class="imagem-logo" width="95px"></a>
+        </div>
+        <div class="logo-texto">
+            N6 BANK
+        </div>
+
+        <div class="menu">
+            <nav>
+                <a href="sobre.html">Sobre</a></li>
+                <a href="contato.html">Contato e Ajuda</a></li>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <div class="card-container">
+            <div class="front">
+                <span><img src="/src/img/Sem_Titulo-1.ico" alt="" height="65px"></span>
+                <div class="card-number-box">Seu nome completo</div>
+                <div class="email">E-mail</div>
+                <div class="cpf">CPF</div>
+            </div>
+        </div>
+        <form id="myForm">
+            <div class="inputBox">
+                <span>Seu nome completo</span>
+                <input type="text" maxlength="50" class="card-name-input">
+                <div class="error" id="nameError"></div>
+            </div>
+            <div class="inputBox">
+                <span>E-mail</span>
+                <input type="text" maxlength="50" class="card-email-input">
+                <div class="error" id="emailError"></div>
+            </div>
+            <div class="inputBox">
+                <span>CPF</span>
+                <input type="text" maxlength="14" class="card-cpf-input">
+                <div class="error" id="cpfError"></div>
+            </div>
+            <div class="flexbox">
+            </div>
+            <div class="inputBox">
+                <span>Senha:</span>
+                <input type="password" maxlength="50" class="card-password-input">
+                <div class="error" id="passwordError"></div>
+            </div>
+            <input type="submit" value="Cadastrar" class="submit-btn">
+        </form>
+    </div>
+    <script>
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validateCPF(cpf) {
+            const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+            return cpfRegex.test(cpf);
+        }
+
+        function validateName(name) {
+            return name.trim().length > 0;
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+
+        function formatCPF(cpf) {
+            const cleanedCPF = cpf.replace(/\D/g, '');
+            return cleanedCPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            const nameInput = document.querySelector('.card-name-input');
+            const emailInput = document.querySelector('.card-email-input');
+            const cpfInput = document.querySelector('.card-cpf-input');
+            const passwordInput = document.querySelector('.card-password-input');
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const cpfError = document.getElementById('cpfError');
+            const passwordError = document.getElementById('passwordError');
+
+            nameError.innerText = '';
+            emailError.innerText = '';
+            cpfError.innerText = '';
+            passwordError.innerText = '';
+
+            if (!validateName(nameInput.value)) {
+                nameError.innerText = 'Por favor, insira seu nome.';
+                nameError.style.color = 'red';
+                event.preventDefault();
+            }
+
+            if (!validateEmail(emailInput.value)) {
+                emailError.innerText = 'Por favor, insira um e-mail válido.';
+                emailError.style.color = 'red';
+                event.preventDefault();
+            }
+
+            if (!validateCPF(cpfInput.value)) {
+                cpfError.innerText = 'Por favor, insira um CPF válido.';
+                cpfError.style.color = 'red';
+                event.preventDefault();
+            }
+
+            if (!validatePassword(passwordInput.value)) {
+                passwordError.innerText = 'A senha deve ter pelo menos 8 caracteres.';
+                passwordError.style.color = 'red';
+                event.preventDefault();
+            }
+
+            if (nameError.innerText === '' && emailError.innerText === '' && cpfError.innerText === '' && passwordError.innerText === '') {
+                alert('Cadastro realizado com sucesso!');
+            }
+        });
+
+        document.querySelector('.card-name-input').oninput = () => {
+            document.querySelector('.card-number-box').innerText = document.querySelector('.card-name-input').value;
+        }
+
+        document.querySelector('.card-email-input').oninput = () => {
+            document.querySelector('.email').innerText = document.querySelector('.card-email-input').value;
+        }
+
+        document.querySelector('.card-cpf-input').oninput = () => {
+            const cpfValue = document.querySelector('.card-cpf-input').value;
+            const formattedCPF = formatCPF(cpfValue);
+            document.querySelector('.card-cpf-input').value = formattedCPF;
+            document.querySelector('.cpf').innerText = formattedCPF;
+        }
+    </script>
+
+    <footer>
+        <center><p class="name">Criado por <strong>Paulo Vitor</strong> e <strong>Gean Alves</strong></p></center> 
+    </footer>
+</body>
+</html>
